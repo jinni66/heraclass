@@ -1,0 +1,21 @@
+{
+    "model_path": "models/chatglm2/chatglm2-6b/",
+    "peft_path": "models/chatglm2/peft/",
+    "peft_set": {
+      "NLP": "instruction/checkpoint-8000/",
+      "MTD": "ustc-tfc-2016-detection-packet/checkpoint-10000/",
+      "BND": "iscx-botnet-2014-detection-packet/checkpoint-5000/",
+      "WAD": "csic-2010-detection-packet/checkpoint-6000/",
+      "AAD": "dapt-2020-detection-packet/checkpoint-20000/",
+      "EVD": "iscx-vpn-2016-detection-packet/checkpoint-4000/",
+      "TBD": "iscx-tor-2016-detection-packet/checkpoint-10000/"
+    },
+    "tasks": {
+      "Malware Traffic Detection": "MTD",
+      "Botnet Detection": "BND",
+      "Web Attack Detection": "WAD",
+      "APT Attack Detection": "AAD",
+      "Encrypted VPN Detection": "EVD",
+      "Tor Behavior Detection": "TBD"
+    }
+}

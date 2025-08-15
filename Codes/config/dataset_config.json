@@ -1,0 +1,26 @@
+{
+    "common_config": {
+        "macro_seq_len": 4,
+        "seq_len": 8,
+        "batch_size": 2,
+        "target": "Label"
+    },
+    "timexer_config": {
+        "timeenc": 1,
+        "target": "pkt_size",
+        "freq": "us",
+        "features": "S",
+        "timestamp_flag": true,
+        "used_col": ["date", "pkt_size"]
+
+    },
+    "traffic_llm_config": {
+        "traffic_data_col_mapping": {
+            "src": "src",
+            "dst": "dst",
+            "proto": "proto",
+            "sport": "sport",
+            "dport": "dport"
+        }
+    }
+}

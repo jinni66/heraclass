@@ -1,0 +1,11 @@
+{
+    "icq": 0,
+    "sftp": 1,
+    "email": 2,
+    "vimeo": 3,
+    "spotify": 4,
+    "bittorrent": 5,
+    "hangouts": 6,
+    "ftps": 7,
+    "skype": 8
+}

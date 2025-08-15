@@ -1,0 +1,8 @@
+{
+    "Flood": 0,
+    "Nmap": 1,
+    "Audio": 2,
+    "Hydra": 3,
+    "Cameras": 4,
+    "Home Automation": 5
+}

@@ -1,0 +1,15 @@
+{
+    "SMB": 0,
+    "Shifu": 1,
+    "WorldOfWarcraft": 2,
+    "Geodo": 3,
+    "Tinba": 4,
+    "BitTorrent": 5,
+    "Cridex": 6,
+    "Neris": 7,
+    "MySQL": 8,
+    "Skype": 9,
+    "FTP": 10,
+    "Gmail": 11,
+    "Weibo": 12
+}

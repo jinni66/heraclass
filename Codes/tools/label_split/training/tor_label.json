@@ -1,0 +1,8 @@
+{
+    "audio": 0,
+    "browsing": 1,
+    "voip": 2,
+    "file": 3,
+    "mail": 4,
+    "chat": 5
+}

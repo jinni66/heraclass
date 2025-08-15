@@ -1,0 +1,57 @@
+{
+  "timexer_config": {
+    "patch_len": 4,
+    "e_layers": 3,
+    "enc_in": 1,
+    "d_model": 512,
+    "d_ff": 512,
+    "freq": "us",
+    "features": "S",
+    "seq_len": 8,
+
+    "task_name": "long_term_forecast",
+    "pred_len": 24,
+    "use_norm": 1,
+    "need_encoding_data": true,
+    "dropout": 0.1,
+    "embed": "timeF",
+    "factor": 1,
+    "n_heads": 8,
+    "activation": "gelu",
+
+    "macro_seq_len": 4
+  },
+  "traffic_llm_config": {
+    "model_path": "chatglm2-6b",
+    "peft_path": "traffic_datasets/",
+    "peft_set": {
+      "NLP": "instruction/checkpoint-8000/",
+      "BND": "iscx-botnet-2014-detection-packet/checkpoint-5000/",
+      "WAD": "csic-2010-detection-packet/checkpoint-6000/",
+      "AAD": "dapt-2020-detection-packet/checkpoint-20000/",
+      "EVD": "vpn/",
+      "TBD": "tor/",
+      "MTD": "ustc/",
+      "CTD": "cic/",
+      "ATD": "android/",
+      "ITD": "ios/"
+    },
+    "tasks": {
+      "Botnet Detection": "BND",
+      "Web Attack Detection": "WAD",
+      "APT Attack Detection": "AAD",
+      "Encrypted VPN Detection": "EVD",
+      "Tor Behavior Detection": "TBD",
+      "Malware Traffic Detection": "MTD",
+      "Ciciot Traffic Detection": "CTD",
+      "Android Traffic Detection": "ATD",
+      "Ios Traffic Detection": "ITD"
+    },
+
+    "macro_seq_len": 4
+  },
+  "decoder_config": {
+    "model_name_or_path": "models-t5",
+    "encoder_output_dim": 4608
+  }
+}
