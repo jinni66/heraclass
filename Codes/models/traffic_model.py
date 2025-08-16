@@ -24,11 +24,6 @@ os.environ['HF_EVALUATE_OFFLINE'] = "1"
 
 
 class TrafficEncoder(nn.Module):
-    """
-    An encoder that combines a time-series encoder (TimeXer) and a traffic encoder (TrafficLLM).
-    Input: traffic data (separated for each encoder)
-    Output: traffic embedding
-    """
     def __init__(self,
                  timexer_config: dict,
                  traffic_llm_config: dict,
@@ -37,11 +32,9 @@ class TrafficEncoder(nn.Module):
 
         self.device = device
 
-        # initialize timexer
         self.timexer_config = timexer_config
         self.timexer_encoder = self._build_timexer(timexer_config)
 
-        # initialize traffic llm
         self.traffic_llm_config = traffic_llm_config
         self.traffic_llm_encoder = self._build_traffic_llm(traffic_llm_config)
 
@@ -81,25 +74,18 @@ class TrafficEncoder(nn.Module):
 
 
 class TrafficDecoder(nn.Module):
-    """
-    A multi-modality mixer model based on T5 decoder.
-    Input: traffic embedding + text
-    Output: output text
-    """
     def __init__(self, config: dict):
         super().__init__()
 
         model_name_or_path = config["model_name_or_path"]
         encoder_output_dim = config["encoder_output_dim"]
 
-        # T5 decoder for mixing traffic modality and text modality
         self.t5_tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
         t5_model = AutoModelForSeq2SeqLM.from_pretrained(model_name_or_path)
         self.t5_decoder = t5_model.decoder
         self.lm_head = t5_model.lm_head
         self.t5_dim = t5_model.config.d_model
 
-        # projections
         self.input_proj = nn.Linear(encoder_output_dim, self.t5_dim, bias=False)
 
     def forward(self,
@@ -131,7 +117,6 @@ class TrafficDecoder(nn.Module):
         )
         sequence_output = decoder_outputs[0]
         if self.t5_decoder.config.tie_word_embeddings:
-            # Rescale output before projecting on vocab
             sequence_output = sequence_output * (self.t5_dim**-0.5)
 
         lm_logits = self.lm_head(sequence_output)
@@ -139,7 +124,6 @@ class TrafficDecoder(nn.Module):
         loss = None
         if labels is not None:
             loss_fct = CrossEntropyLoss(ignore_index=-100)
-            # move labels to correct device to enable PP
             labels = labels.to(lm_logits.device)
             loss = loss_fct(lm_logits.view(-1, lm_logits.size(-1)), labels.view(-1))
 
@@ -169,7 +153,6 @@ class TrafficModel(nn.Module):
                  ):
         super().__init__()
         self.device = device
-        # Initialize Encoder and Decoder
         self.encoder = TrafficEncoder(
             timexer_config=timexer_config,
             traffic_llm_config=traffic_llm_config,
@@ -191,9 +174,7 @@ class TrafficModel(nn.Module):
             output_hidden_states: Optional[bool] = None,
             return_dict: Optional[bool] = None,
     ) -> Union[Tuple[torch.FloatTensor], Seq2SeqLMOutput]:
-        # Encode if needed (training, first prediction pass)
         if encoder_outputs is None:
-            # Convert encoder inputs in embeddings if needed
             encoder_outputs = self.encoder(
                 timexer_data = timexer_data,
                 traffic_llm_data = traffic_llm_data,
@@ -207,10 +188,9 @@ class TrafficModel(nn.Module):
 
         encoder_hidden_states = encoder_outputs[0]
 
-        # Decode
         decoder_outputs = self.decoder(
             input_ids=decoder_input_ids,
-            attention_mask=None,  # let it auto-compute
+            attention_mask=None,
             encoder_hidden_states=encoder_hidden_states,
             inputs_embeds=inputs_embeds,
             past_key_values=past_key_values,

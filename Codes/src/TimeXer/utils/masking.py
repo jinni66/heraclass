@@ -55,7 +55,6 @@ def generate_continuous_mask(B, T, C=None, n=5, l=0.1):
 
 
 def expand_tensor(input_tensor, third_dim_size):
-    # 将输入张量转换为三维张量
     expanded_tensor = input_tensor.unsqueeze(2).expand(-1, -1, third_dim_size)
 
     return expanded_tensor.bool()

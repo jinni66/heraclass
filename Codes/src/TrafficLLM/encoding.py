@@ -46,13 +46,13 @@ def main(config, traffic_data: str = None, **kwargs):
         traffic_data,
         padding=True,
         truncation=True,
-        max_length=8192,  # 或者设置一个固定的最大长度
+        max_length=8192,
         return_tensors="pt"
     ).to(model_downstream.device)
     with torch.no_grad():
         encoder_outputs_traffic = model_downstream(**inputs_traffic, output_hidden_states=True)
 
-    embeddings_traffic = encoder_outputs_traffic.hidden_states[-1]  # 提取流量数据的嵌入
+    embeddings_traffic = encoder_outputs_traffic.hidden_states[-1]
     print(embeddings_traffic)
 
 

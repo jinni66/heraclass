@@ -1,4 +1,3 @@
-# TODO: use torch.utils.data.DataLoader
 import os
 
 import pandas as pd
@@ -17,12 +16,10 @@ class TrafficDataset(Dataset):
         self.traffic_llm_config = traffic_llm_config
         self.timexer_config = timexer_config
 
-        # common config
         self.seq_len = self.common_config['seq_len']
         self.target = self.common_config['target']
         self.filter_str = self.common_config['filter_str'] if 'filter_str' in self.common_config else None
 
-        # timexer config
         self.timeenc = self.timexer_config['timeenc']
         self.timestamp_flag = self.timexer_config.get('timestamp_flag', False)
         self.freq = self.timexer_config['freq']
@@ -30,7 +27,6 @@ class TrafficDataset(Dataset):
         self.features = self.timexer_config['features']
         self.timexer_target = self.timexer_config['target']
 
-        # traffic LLM config
         self.traffic_data_col_mapping = self.traffic_llm_config['traffic_data_col_mapping']
 
         self.__read_data__()
@@ -46,7 +42,6 @@ class TrafficDataset(Dataset):
             df_list.append(pd.read_csv(file_name))
 
         df_raw = pd.concat(df_list)
-        # df_raw = pd.read_csv(self.data_path)
         self._handle_timexer_data(df_raw)
         self._handle_traffic_llm_data(df_raw)
         self._handle_traffic_target(df_raw)

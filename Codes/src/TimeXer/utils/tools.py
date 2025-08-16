@@ -165,7 +165,6 @@ def custom_collate(batch):
 
 class HiddenPrints:
     def __init__(self, rank):
-        # 如果rank是none，那么就是单机单卡，不需要隐藏打印，将rank设置为0
         if rank is None:
             rank = 0
         self.rank = rank

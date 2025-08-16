@@ -30,7 +30,6 @@ def MAPE(pred, true):
 def MSPE(pred, true):
     return np.mean(np.square((pred - true) / true))
 
-# 标准差
 def STD(pred, true):
     return np.std(pred - true)
 

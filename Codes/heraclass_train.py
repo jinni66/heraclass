@@ -107,7 +107,7 @@ def train_clip_softmax(config_path, data_path, save_path, log_path, traffic_llm_
             traffic_features = traffic_features / (traffic_features.norm(dim=-1, keepdim=True) + eps)
             traffic_features = traffic_features.float()
 
-            logits = traffic_features @ label_features.T  # [B, C]
+            logits = traffic_features @ label_features.T
             loss = F.cross_entropy(logits / temp, label_indices)
 
             if torch.isnan(loss) or torch.isinf(loss):
@@ -175,9 +175,9 @@ def train_clip_softmax(config_path, data_path, save_path, log_path, traffic_llm_
 
     total_time = time.time() - start_time
     peak_memory = torch.cuda.max_memory_allocated(device) / 1024 / 1024
-    print(f"🕒: {total_time:.2f}s")
-    print(f"💾: {peak_memory:.2f} MB")
-    print(f"✅: {save_path}")
+    print(f" {total_time:.2f}s")
+    print(f"{peak_memory:.2f} MB")
+    print(f"{save_path}")
 
     with open(log_path, "a", encoding="utf-8") as f_log:
         f_log.write(f"{total_time:.2f}s\n")
