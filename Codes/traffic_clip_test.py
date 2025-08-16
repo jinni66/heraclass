@@ -12,7 +12,7 @@ model.eval()
 
 model.load_state_dict(torch.load("best_model.pt", map_location=device))
 
-test_json_path = "ios_test.json"
+test_json_path = "test.json"
 test_data = []
 true_labels = []
 with open(test_json_path, 'r', encoding='utf-8') as f:
@@ -72,7 +72,7 @@ def load_specified_categories(file_path):
         line = f.readline().strip()
         return {cat.strip() for cat in line.split(",") if cat.strip()}
 
-specified_categories_file = "training/ios_label.txt"
+specified_categories_file = "training/label.txt"
 specified_categories = load_specified_categories(specified_categories_file)
 
 output_lines = []

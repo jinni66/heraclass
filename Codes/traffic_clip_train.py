@@ -108,7 +108,7 @@ model = model.float()
 for name, param in model.named_parameters():
     param.requires_grad = "transformer" in name
 
-dataset = TrafficDataset("ios_train.json")
+dataset = TrafficDataset("train.json")
 
 train_size = int(0.9 * len(dataset))
 val_size = len(dataset) - train_size
@@ -164,4 +164,4 @@ for epoch in range(epochs):
         best_val_acc = val_acc
         torch.save(model.state_dict(), "best_model.pt")
         print(f"✅ Best model saved at Epoch {epoch+1} with Val Acc: {val_acc:.4f}")
-torch.save(model.state_dict(), "ios_label_model.pt")
+torch.save(model.state_dict(), "label_model.pt")
