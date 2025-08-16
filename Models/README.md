@@ -1,2 +1,2 @@
 HeraClass Models.  
-Pre-trained TrafficCLIP and NetFusion
+Pre-trained TrafficCLIP and NetFusion.
